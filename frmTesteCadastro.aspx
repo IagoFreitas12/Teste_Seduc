@@ -107,19 +107,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <asp:Label ID="lblRegistros" runat="server" CssClass="badge bg-aqua" />
-                    <asp:GridView ID="grdDocumentos" runat="server" CssClass="table table-bordered" PagerStyle-CssClass="paginacao" AllowSorting="True" AllowPaging="True" PageSize="20" AutoGenerateColumns="False" DataKeyNames="CI02_ID_DOCUMENTOS">
+                    <asp:GridView ID="grdDocumentos" runat="server" CssClass="table table-bordered" PagerStyle-CssClass="paginacao" AllowSorting="True" AllowPaging="True" PageSize="20" AutoGenerateColumns="False" DataKeyNames="CI02_ID_DOCUMENTOS, CI01_ID_ALUNO, CI01_NM_ALUNO">
                         <HeaderStyle CssClass="bg-aqua" ForeColor="White" />
                         <Columns>
                             <asp:BoundField DataField="CI01_ID_ALUNO" SortExpression="CI01_ID_ALUNO" HeaderText="Numero ID do aluno" />
-                            <asp:BoundField DataField="CI02_ID_DOCUMENTOS" SortExpression="CI02_ID_DOCUMENTOS" HeaderText="Nome do Aluno" />                           
+                            <asp:BoundField DataField="CI01_NM_ALUNO" SortExpression="CI01_NM_ALUNO" HeaderText="Nome do aluno" />
+                            <asp:BoundField DataField="CI02_ID_DOCUMENTOS" SortExpression="CI02_ID_DOCUMENTOS" HeaderText="ID Documento" />                           
                             <asp:BoundField DataField="CI02_NU_CPF_MAE" SortExpression="CI02_NU_CPF_MAE" HeaderText="Numero cpf MAE" />
-                            <asp:BoundField DataField="CI01_ID_ALUNO" SortExpression="CI01_ID_ALUNO" HeaderText="Numero Id do aluno" />
-                            <asp:BoundField DataField="CI01_ID_ALUNO" SortExpression="CI01_ID_ALUNO" HeaderText="Numero Id do aluno" />
-                            <asp:BoundField DataField="CI01_ID_ALUNO" SortExpression="CI01_ID_ALUNO" HeaderText="Numero Id do aluno" />
                             <asp:TemplateField HeaderText="Editar/Excluir" SortExpression="" Visible="true" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
                                 <ItemTemplate>
                                     <div class="btn-group">
-                                         <asp:LinkButton ID="lnkEditarDocumentos" runat="server" class="btn btn-social-icon bg-blue" CommandName="EDITAR" ToolTip="EditarDocumentos">
+                                        <asp:LinkButton ID="lnkEditarDocumentos" runat="server" class="btn btn-social-icon bg-blue" CommandName="EDITAR" ToolTip="EditarDocumentos">
                                             <i id="iEditarDocumentos" runat="server" class="fa fa-mortar-board"></i>
                                         <asp:LinkButton ID="lnkExcluirDocumentos" runat="server" class="btn btn-social-icon bg-red" CommandName="EXCLUIR" ToolTip="ExcluirDocumentos">
                                             <i id="iExcluirDocumentos" runat="server" class="fa fa-mortar-board"></i>

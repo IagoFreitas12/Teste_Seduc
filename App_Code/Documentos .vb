@@ -207,13 +207,17 @@ Public Class Documentos
                               Optional ByVal EmissaoRgAluno As String = "",
                               Optional ByVal DataNascimentoAluno As String = "",
                               Optional ByVal Sexo As String = "",
+                              Optional ByVal NomeAluno As String = "",
                               Optional ByVal DataeHoraCadastro As String = "") As DataTable
+
         Dim cnn As New Conexao
         Dim strSQL As New StringBuilder
 
-        strSQL.Append(" select * ")
-        strSQL.Append(" from CI02_DOCUMENTOS")
-        strSQL.Append(" where CI02_ID_DOCUMENTOS is not null")
+        strSQL.Append(" select C2.CI02_ID_DOCUMENTOS, C2.CI02_NM_MAE, C1.CI01_ID_ALUNO, C1.CI01_NM_ALUNO, C2.CI02_NM_MAE, C2.CI02_NU_CPF_MAE, C2.CI02_NM_PAI, C2.CI02_NU_CPF_PAI, C2.CI02_NU_TELEFONE_RESPONSAVEL, C2.CI02_NU_RG_ALUNO, C2.CI02_DT_EMISSAO_RG_ALUNO, C2.CI02_DT_NASCIMENTO_ALUNO, C2.CI02_TP_SEXO_ALUNO, C2.CI02_DH_CADASTRO")
+        strSQL.Append(" from CI02_DOCUMENTOS C2")
+        strSQL.Append(" left join CI01_ALUNO C1 ON C1.CI01_ID_ALUNO = C2.CI01_ID_ALUNO")
+
+
 
         If IdDocumentos > 0 Then
             strSQL.Append(" and CI02_ID_DOCUMENTOS = " & IdDocumentos)
@@ -222,6 +226,11 @@ Public Class Documentos
         If IdAluno > 0 Then
             strSQL.Append(" and CI01_ID_ALUNO = " & IdAluno)
         End If
+
+        If NomeAluno <> "" Then
+            strSQL.Append(" and upper(CI01_NM_ALUNO) like '%" & NomeAluno.ToUpper & "%'")
+        End If
+
 
         If NomeMae <> "" Then
             strSQL.Append(" and upper(CI02_NM_MAE) like '%" & NomeMae.ToUpper & "%'")

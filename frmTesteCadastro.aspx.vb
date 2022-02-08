@@ -56,8 +56,8 @@ Partial Class frmTesteCadastro
         objDocumentos = Nothing
     End Sub
 
-    Private Sub Editar()
-        Dim objDocumentos As New Documentos(ViewState("Documentos"))
+    Private Sub Editar(ByVal Documentos As Integer)
+        Dim objDocumentos As New Documentos(Documentos)
         With objDocumentos
             txtNomeMae.Text = .NomeMae
             txtCpfMae.Text = .CpfMae
@@ -69,6 +69,7 @@ Partial Class frmTesteCadastro
             txtDataNascimentoAluno.Text = .DataNascimentoAluno
             txtDataeHoraCadastro.Text = .DataeHoraCadastro
             drpAluno.SelectedValue = .IdAluno
+            drpSexo.SelectedValue = .Sexo
 
 
 
@@ -116,15 +117,13 @@ Partial Class frmTesteCadastro
 
         Dim objAluno As New Aluno
 
-        With drpAluno
-            .DataSource = objAluno.ObterTabela()
-            .DataValueField = "CODIGO"
-            .DataTextField = "DESCRICAO"
-            .DataBind()
-            .Items.Insert(0, "...")
-            .SelectedIndex = 0
+        drpAluno.DataSource = objAluno.ObterTabela()
+        drpAluno.DataValueField = "CODIGO"
+        drpAluno.DataTextField = "DESCRICAO"
+        drpAluno.DataBind()
+        drpAluno.Items.Insert(0, "...")
+        drpAluno.SelectedIndex = 0
 
-        End With
         objAluno = Nothing
     End Sub
 
@@ -148,7 +147,15 @@ Partial Class frmTesteCadastro
             Response.Redirect(Request.Url.ToString)
         ElseIf e.CommandName = "EXCLUIR" Then
             Excluir(grdDocumentos.DataKeys(e.CommandArgument).Item(0))
+
+
+
+        ElseIf e.CommandName = "EDITAR" Then
+            ViewState("Documentos") = grdDocumentos.DataKeys(e.CommandArgument).Item(0)
+            Editar(ViewState("Documentos"))
+            CarregarGrid()
         End If
+
 
 
     End Sub
@@ -161,14 +168,21 @@ Partial Class frmTesteCadastro
             Case DataControlRowType.DataRow
 
                 Dim lnkExcluirDocumentos As New LinkButton
+                Dim lnkEditarDocumentos As New LinkButton
+
                 lnkExcluirDocumentos = DirectCast(e.Row.Cells(ColunasGrid_grdDocumentos.buttons).FindControl("lnkExcluirDocumentos"), LinkButton)
                 lnkExcluirDocumentos.CommandArgument = e.Row.RowIndex
+
+                lnkEditarDocumentos = DirectCast(e.Row.Cells(ColunasGrid_grdDocumentos.buttons).FindControl("lnkEditarDocumentos"), LinkButton)
+                lnkEditarDocumentos.CommandArgument = e.Row.RowIndex
+
+
+
                 lnkExcluirDocumentos = Nothing
+                lnkEditarDocumentos = Nothing
 
         End Select
     End Sub
-
-
 
 #End Region
 End Class
